@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>A Very Important Question</title>
+
+  <!-- Spooky font -->
+  <link href="https://fonts.googleapis.com/css2?family=Butcherman&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
@@ -12,42 +16,65 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      transition: all 0.8s ease;
+      transition: background 0.8s ease;
+      overflow: hidden;
     }
 
     .screen {
       max-width: 360px;
       padding: 30px;
+      position: relative;
     }
 
     button {
       padding: 12px 22px;
-      margin-top: 20px;
       font-size: 16px;
       border-radius: 14px;
       border: none;
       cursor: pointer;
     }
 
-    /* Spooky screen */
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 28px;
+      position: relative;
+    }
+
+.scrollable {
+  overflow-y: auto;
+}
+    /* ========== SCREENS ========== */
+
+    /* Spooky */
     .spooky {
-      background: black;
-      color: #e6e6e6;
-      letter-spacing: 1px;
+      background-image:
+        linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+        url("https://imgcdn.stablediffusionweb.com/2025/9/5/0c00ff6e-ec9f-46cc-a31f-9f7e8ca594a5.jpg");
+      background-size: cover;
+      background-position: center;
+      color: #f5f5f5;
+      font-family: 'Butcherman', cursive;
+      letter-spacing: 3px;
+    }
+
+    .spooky h1 {
+      font-size: 54px;
+      text-shadow: 4px 4px 16px rgba(0,0,0,1);
+    }
+
+    .spooky p {
+      font-size: 26px;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.9);
     }
 
     .spooky button {
       background: #222;
-      color: #fff;
+      color: white;
     }
 
-    /* Taunt screen */
-    .taunt {
-      background: #fff0f6;
-      color: #ff4d88;
-    }
-
-    /* Question screen */
+    /* Valentine question – PINK */
     .question {
       background: #ffe6f0;
       color: #ff4d88;
@@ -59,21 +86,103 @@
     }
 
     #no {
-      background: #ccc;
+      background: #e6e6e6;
       position: absolute;
+    }
+
+    /* Sunflower – PALE YELLOW */
+    .sunflower {
+      background: #fff8dc;
+      color: #b85c00;
+    }
+
+    /* Final taunt – LAVENDER */
+    .taunt {
+      background: #f3e5f5;
+      color: #6a1b9a;
+    }
+    /* Valentine question – custom background */
+.valentine {
+  background-image:
+    linear-gradient(
+      rgba(255, 248, 240, 0.58),
+      rgba(255, 248, 240, 0.58)
+    ),
+    url("https://img.freepik.com/free-vector/heart-background-desktop-wallpaper-cute-vector_53876-144637.jpg?semt=ais_hybrid&w=740&q=80");
+
+  background-position: center;
+  color: #8b1e3f;
+}
+
+
+.valentine h1 {
+  font-size: 42px;
+  margin-bottom: 16px;
+}
+
+.valentine p {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.valentine .buttons button {
+  font-size: 20px;
+  padding: 16px 30px;
+  border-radius: 24px;
+}
+
+#yes {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#yes:hover {
+  transform: scale(1.08);
+  box-shadow: 0 10px 25px rgba(201, 24, 74, 0.4);
+}
+
+#no {
+  background: #ffe3ec;
+  color: #8b1e3f;
+  position: relative;   /* IMPORTANT */
+}
+
+
+
+    /* Smoke overlay */
+    #smoke {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(
+        circle,
+        rgba(255,255,255,0.9) 0%,
+        rgba(200,200,200,0.85) 40%,
+        rgba(100,100,100,0.9) 70%,
+        rgba(0,0,0,1) 100%
+      );
+      z-index: 999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1.5s ease;
+    }
+
+    #smoke.active {
+      opacity: 1;
     }
   </style>
 </head>
+
 <body class="spooky">
 
-  <div class="screen" id="screen">
-    <h2>⚠️ Warning ⚠️</h2>
-    <p>
-      You had one job.<br><br>
-      Click at your own risk.
-    </p>
-    <button onclick="nextScreen()">Continue</button>
-  </div>
+<div id="smoke"></div>
+
+<div class="screen" id="screen">
+  <h1>⚠️ WARNING ⚠️</h1>
+  <p>
+    You had one job.<br><br>
+    Click at your own risk.
+  </p>
+  <button onclick="nextScreen()">Continue</button>
+</div>
 
 <script>
   let step = 0;
@@ -81,51 +190,120 @@
   function nextScreen() {
     step++;
 
+    // Spooky → Smoke → Valentine
     if (step === 1) {
-      document.body.className = "taunt";
-      document.getElementById("screen").innerHTML = `
-        <h2>Interesting… 😌</h2>
-        <p>
-          Next year,<br>
-          you ask first.
-        </p>
-        <button onclick="nextScreen()">Okay okay</button>
-      `;
+      const smoke = document.getElementById("smoke");
+      smoke.classList.add("active");
+
+      setTimeout(() => {
+        smoke.classList.remove("active");
+        document.body.className = "valentine";
+
+        document.getElementById("screen").innerHTML = `
+<div style="
+  background: rgba(255,255,255,0.85);
+  padding: 20px;
+  border-radius: 20px;
+">
+  <h1>So anyway… 💘</h1>
+  <p>Will you be my Valentine?</p>
+</div>
+
+
+          <div class="buttons" id="btnBox">
+  <button id="yes" onclick="nextScreen()">YES 💖</button>
+  <button 
+    id="no" 
+    onmouseover="moveNo()" 
+    style="left:auto; top:auto;"
+  >
+    NO 😒
+  </button>
+</div>
+
+        `;
+      }, 1000);
     }
 
+    // Sunflower screen – pale yellow
     else if (step === 2) {
-      document.body.className = "question";
-      document.getElementById("screen").innerHTML = `
-        <h2>So anyway… 💘</h2>
-        <p>Will you be my Valentine?</p>
-        <button id="yes" onclick="nextScreen()">YES 💖</button>
-        <button id="no" onmouseover="moveNo()">NO 🙄</button>
-      `;
-    }
-
-    else if (step === 3) {
-      document.body.className = "question";
+      document.body.className = "sunflower scrollable";
       document.getElementById("screen").innerHTML = `
         <h2>Correct answer 😌</h2>
-        <div style="font-size:120px;">🌻</div>
+
+<div style="margin:30px 0;">
+  <img src="IMG_1995.JPG"
+       alt="sunflower"
+       style="
+         width:260px;
+         max-width:100%;
+         display:block;
+         margin:0 auto;
+         border-radius:24px;
+       " />
+</div>
+
+<img src="thug-life.gif">
+	
+
+
         <p>
           A sunflower for you<br>
           because I am clearly the sunshine here ☀️
         </p>
-        <p style="font-size:14px; color:#777;">
-          Happy Valentine’s 💕
+
+        <button onclick="nextScreen()" style="
+          margin-top:20px;
+          background:#ffb300;
+          color:white;
+          padding:12px 24px;
+          border-radius:18px;
+        ">
+          One last thing…
+        </button>
+      `;
+    }
+
+    // Final taunt
+    else if (step === 3) {
+      document.body.className = "taunt scrollable";
+      document.getElementById("screen").innerHTML = `
+        <h1>Just saying .....</h1>
+
+        <img src="https://media1.tenor.com/m/WH91fCCsEt4AAAAC/tkthao219-bubududu.gif"
+             style="width:420px; margin:20px auto; display:block; border-radius:20px;" />
+
+        <p style="font-size:28px;">
+          Next year,<br>
+          you ask first.
         </p>
       `;
     }
   }
 
-  function moveNo() {
-    const noBtn = document.getElementById("no");
-    noBtn.style.left = Math.random() * 80 + "vw";
-    noBtn.style.top = Math.random() * 80 + "vh";
-  }
+function moveNo() {
+  const noBtn = document.getElementById("no");
+
+  const btnWidth = noBtn.offsetWidth;
+  const btnHeight = noBtn.offsetHeight;
+
+  const padding = 20;
+
+  const maxX = window.innerWidth - btnWidth - padding;
+  const maxY = window.innerHeight - btnHeight - padding;
+
+  const minX = padding;
+  const minY = padding + 80; // keeps it away from top bar
+
+  const randomX = Math.random() * (maxX - minX) + minX;
+  const randomY = Math.random() * (maxY - minY) + minY;
+
+  noBtn.style.position = "fixed";
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top = randomY + "px";
+}
+
 </script>
 
 </body>
 </html>
-	
