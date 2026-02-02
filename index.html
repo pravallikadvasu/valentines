@@ -361,7 +361,12 @@ body.scrollable {
     // Final taunt
     else if (step === 3) {
   document.body.className = "taunt scrollable";
-  document.getElementById("screen").innerHTML = `
+
+  // 👇 RESET SCROLL POSITION (THIS IS THE KEY)
+  window.scrollTo(0, 0);
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+      
     <h1>Just saying… 😌</h1>
 
     <img 
