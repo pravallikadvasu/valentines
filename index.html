@@ -2,63 +2,130 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Be My Valentine?</title>
+  <title>A Very Important Question</title>
   <style>
     body {
-      background-color: #ffe6f0;
+      margin: 0;
+      height: 100vh;
+      font-family: 'Comic Sans MS', cursive;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      font-family: 'Comic Sans MS', cursive;
       text-align: center;
+      transition: all 0.8s ease;
     }
-    .box {
-      background: white;
+
+    .screen {
+      max-width: 360px;
       padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
-    h1 {
-      color: #ff4d88;
-    }
+
     button {
-      padding: 12px 20px;
-      margin: 10px;
-      font-size: 18px;
+      padding: 12px 22px;
+      margin-top: 20px;
+      font-size: 16px;
+      border-radius: 14px;
       border: none;
-      border-radius: 12px;
       cursor: pointer;
     }
+
+    /* Spooky screen */
+    .spooky {
+      background: black;
+      color: #e6e6e6;
+      letter-spacing: 1px;
+    }
+
+    .spooky button {
+      background: #222;
+      color: #fff;
+    }
+
+    /* Taunt screen */
+    .taunt {
+      background: #fff0f6;
+      color: #ff4d88;
+    }
+
+    /* Question screen */
+    .question {
+      background: #ffe6f0;
+      color: #ff4d88;
+    }
+
     #yes {
-      background-color: #ff4d88;
+      background: #ff4d88;
       color: white;
     }
+
     #no {
-      background-color: #ccc;
+      background: #ccc;
       position: absolute;
     }
   </style>
 </head>
-<body>
+<body class="spooky">
 
-<div class="box">
-  <h1>Will you be my Valentine? 💘</h1>
-  <button id="yes" onclick="yesClick()">YES 💖</button>
-  <button id="no" onmouseover="moveNo()">NO 😒</button>
-</div>
+  <div class="screen" id="screen">
+    <h2>⚠️ Warning ⚠️</h2>
+    <p>
+      You had one job.<br><br>
+      Click at your own risk.
+    </p>
+    <button onclick="nextScreen()">Continue</button>
+  </div>
 
 <script>
+  let step = 0;
+
+  function nextScreen() {
+    step++;
+
+    if (step === 1) {
+      document.body.className = "taunt";
+      document.getElementById("screen").innerHTML = `
+        <h2>Interesting… 😌</h2>
+        <p>
+          Next year,<br>
+          you ask first.
+        </p>
+        <button onclick="nextScreen()">Okay okay</button>
+      `;
+    }
+
+    else if (step === 2) {
+      document.body.className = "question";
+      document.getElementById("screen").innerHTML = `
+        <h2>So anyway… 💘</h2>
+        <p>Will you be my Valentine?</p>
+        <button id="yes" onclick="nextScreen()">YES 💖</button>
+        <button id="no" onmouseover="moveNo()">NO 🙄</button>
+      `;
+    }
+
+    else if (step === 3) {
+      document.body.className = "question";
+      document.getElementById("screen").innerHTML = `
+        <h2>Correct answer 😌</h2>
+        <div style="font-size:120px;">🌻</div>
+        <p>
+          A sunflower for you<br>
+          because I am clearly the sunshine here ☀️
+        </p>
+        <p style="font-size:14px; color:#777;">
+          Happy Valentine’s 💕
+        </p>
+      `;
+    }
+  }
+
   function moveNo() {
     const noBtn = document.getElementById("no");
     noBtn.style.left = Math.random() * 80 + "vw";
     noBtn.style.top = Math.random() * 80 + "vh";
   }
-
-  function yesClick() {
-    document.body.innerHTML = "<h1 style='color:#ff4d88'>YAYYY 💕 I knew it!!<br>See you on Valentine’s 😘</h1>";
-  }
 </script>
 
 </body>
 </html>
+	
