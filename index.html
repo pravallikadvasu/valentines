@@ -215,8 +215,8 @@ body {
 <div class="screen" id="screen">
   <h1>⚠️ WARNING ⚠️</h1>
   <p>
-    You had one job.<br><br>
-    Click at your own risk.
+    A very important decision lies ahead.<br><br>
+    Proceed only if you are brave enough.
   </p>
   <button onclick="nextScreen()">Continue</button>
 </div>
@@ -311,19 +311,51 @@ body {
 
     // Final taunt
     else if (step === 3) {
-      document.body.className = "taunt scrollable";
-      document.getElementById("screen").innerHTML = `
-        <h1>Just saying .....</h1>
+  document.body.className = "taunt scrollable";
+  document.getElementById("screen").innerHTML = `
+    <h1>Just saying… 😌</h1>
 
-        <img src="https://media1.tenor.com/m/WH91fCCsEt4AAAAC/tkthao219-bubududu.gif"
-             style="width:420px; margin:20px auto; display:block; border-radius:20px;" />
+    <img 
+      src="https://media.tenor.com/RcBJtaGElXoAAAAi/boombastic-hmm.gif"
+      style="
+        width:120px;
+        margin:16px auto 24px;
+        display:block;
+        border-radius:20px;
+      "
+    />
 
-        <p style="font-size:28px;">
-          Next year,<br>
-          you ask first.
-        </p>
-      `;
-    }
+    <p style="font-size:26px; margin-bottom:30px;">
+      Next year,<br>
+      you ask first.
+    </p>
+
+    <h2 style="margin-bottom:16px;">💌 Valentine’s Scorecard 💌</h2>
+
+    <div class="scorecard">
+      <div class="score-row">
+        <span>Asking first</span>
+        <span class="fail">❌</span>
+      </div>
+
+      <div class="score-row">
+        <span>Saying yes</span>
+        <span class="win">✅</span>
+      </div>
+
+      <div class="score-row">
+        <span>Being cute Buchiku</span>
+        <span class="win">✅</span>
+      </div>
+    </div>
+
+    <p class="final-line">
+      Final result:<br>
+      <strong>Accepted 😌💖</strong>
+    </p>
+  `;
+}
+
   }
 
 function moveNo() {
