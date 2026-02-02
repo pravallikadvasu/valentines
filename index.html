@@ -5,7 +5,6 @@
   <title>A Very Important Question</title>
 
   <!-- Spooky font -->
-  <link href="https://fonts.googleapis.com/css2?family=Butcherman&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Butcherman&family=Pacifico&display=swap" rel="stylesheet">
 
 
@@ -187,6 +186,18 @@ body {
     #smoke.active {
       opacity: 1;
     }
+
+.question,
+.valentine,
+.sunflower,
+.taunt,
+.question * ,
+.valentine * ,
+.sunflower * ,
+.taunt * {
+  font-family: 'Pacifico', cursive !important;
+}
+
   </style>
 </head>
 
@@ -266,10 +277,18 @@ body {
           because I am clearly the sunshine here ☀️
         </p>
 
-<img src="glasses-thug-life.gif">
-	
-
-
+<img 
+  src="glasses-thug-life.gif"
+  alt="thug life"
+  style="
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    display: block;
+    margin: 12px auto;
+    border-radius: 16px;
+  "
+>
       
 
         <button onclick="nextScreen()" style="
